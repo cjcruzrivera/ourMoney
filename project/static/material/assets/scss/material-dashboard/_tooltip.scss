@@ -19,26 +19,26 @@
     &.bs-tooltip-top,
     &.bs-tooltip-auto[x-placement^="top"]{
         & .arrow::before{
-            border-top-color: $white-color;
+            border-top-color: $white;
         }
     }
 
     &.bs-tooltip-right,
     &.bs-tooltip-auto[x-placement^="right"]{
         & .arrow::before{
-            border-right-color: $white-color;
+            border-right-color: $white;
         }
     }
     &.bs-tooltip-left,
     &.bs-tooltip-auto[x-placement^="left"]{
         & .arrow::before{
-            border-left-color: $white-color;
+            border-left-color: $white;
         }
     }
     &.bs-tooltip-bottom,
     &.bs-tooltip-auto[x-placement^="bottom"]{
         & .arrow::before{
-            border-bottom-color: $white-color;
+            border-bottom-color: $white;
         }
     }
 }

@@ -1,27 +1,26 @@
 {
-  "name": "material-dashboard",
+  "name": "material-dashboard-pro",
+  "description": "Premium Bootstrap 4 Material Design",
   "version": "2.1.2",
-  "description": "Material Dasboard, a Google Material Desgin. Coded by Creative Tim",
-  "main": "index.html",
+  "homepage": "https://demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html",
+  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "license": "Creative Tim License <www.creative-tim.com/license>",
   "directories": {
     "example": "root"
   },
   "scripts": {
-    "open-app": "gulp open-app",
-    "start": "npm run open-app",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "gulp watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/material-dashboard.git"
+    "url": "git+https://github.com/creativetimofficial/ct-material-dashboard-pro"
   },
   "keywords": [
-    "material dashboard",
-    "bootstrap material admin",
-    "bootstrap material dashboard",
-    "material design admin",
+    "material dashboard pro",
+    "bootstrap admin",
     "material design",
+    "bootstrap dashboard",
+    "material design admin",
     "creative tim",
     "html dashboard",
     "html css dashboard",
@@ -34,10 +33,8 @@
     "frontend",
     "responsive bootstrap dashboard"
   ],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/material-dashboard/issues"
+    "url": "https://github.com/creativetimofficial/ct-black-dashboard-pro/issues"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
@@ -47,6 +44,5 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-open": "^3.0.1"
-  },
-  "homepage": "http://demos.creative-tim.com/material-dashboard/examples/dashboard.html?_ga=2.143239282.69692347.1519629130-329288944.1519374311"
+  }
 }

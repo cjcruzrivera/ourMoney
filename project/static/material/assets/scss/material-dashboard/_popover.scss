@@ -1,6 +1,6 @@
 .popover, .tooltip-inner {
     line-height: 1.5em;
-    background: $white-color;
+    background: $white;
     border: none;
     border-radius: $border-radius-base;
     @include shadow-8dp();
@@ -38,7 +38,7 @@
 }
 
 .popover-header{
-    background-color: $white-color;
+    background-color: $white;
     border: none;
     padding: 15px 15px 5px;
     font-size: $font-size-h4;

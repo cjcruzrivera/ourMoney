@@ -4,7 +4,7 @@
     padding: 0.625rem 0;
     margin-bottom: 20px;
     height: auto !important;
-    @include navbar-colors($white-color, $navbar-color);
+    @include navbar-colors($white, $navbar-color);
 
     &.fixed-top{
         border-radius: 0;
@@ -128,29 +128,29 @@
     }
 
     &.bg-primary{
-        @include navbar-colors($bg-primary, $white-color);
+        @include navbar-colors($bg-primary, $white);
     }
     &.bg-info{
-        @include navbar-colors($bg-info, $white-color);
+        @include navbar-colors($bg-info, $white);
     }
 
     &.bg-warning{
-        @include navbar-colors($bg-warning, $white-color);
+        @include navbar-colors($bg-warning, $white);
     }
 
     &.bg-rose{
-        @include navbar-colors($bg-rose, $white-color);
+        @include navbar-colors($bg-rose, $white);
     }
 
     &.bg-danger{
-        @include navbar-colors($bg-danger, $white-color);
+        @include navbar-colors($bg-danger, $white);
     }
 
     &.bg-success{
-        @include navbar-colors($bg-success, $white-color);
+        @include navbar-colors($bg-success, $white);
     }
     &.bg-dark{
-        @include navbar-colors($grey-900, $white-color);
+        @include navbar-colors($grey-900, $white);
     }
 
     &.navbar-transparent{
@@ -235,7 +235,7 @@
           font-size: 12px;
           text-transform: uppercase;
           border-radius: 3px;
-          color: $white-color;
+          color: $white;
           margin: 0 15px;
 
           &:hover{

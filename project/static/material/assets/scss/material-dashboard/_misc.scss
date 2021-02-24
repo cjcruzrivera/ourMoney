@@ -31,7 +31,7 @@ a{
 
   &.text-info{
       &:hover, &:focus{
-          color: darken($brand-info, 5%);
+          color: darken($info, 5%);
       }
   }
 
@@ -79,7 +79,7 @@ label{
     }
     .navbar-brand,
     .collapse .navbar-nav .nav-link {
-      color: $white-color !important;
+      color: $white !important;
     }
   }
 
@@ -89,7 +89,7 @@ label{
     width: 100%;
     background: transparent;
     bottom: 0;
-    color: $white-color;
+    color: $white;
   }
   .page-header{
     display: flex;
@@ -99,7 +99,7 @@ label{
       z-index: 3;
 
       .brand .title {
-        color: $white-color;
+        color: $white;
       }
     }
 
@@ -127,7 +127,7 @@ label{
        padding: 3px 7px;
        font-size: 8px;
        line-height: 9px;
-       background-color: $brand-primary;
+       background-color: $primary;
      }
    }
  }

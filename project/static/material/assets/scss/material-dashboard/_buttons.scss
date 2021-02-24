@@ -24,11 +24,11 @@
       &,
       &:focus,
       &:hover {
-          background-color: $white-color;
+          background-color: $white;
           color: $gray-color;
       }
       &.btn-link {
-          color: $white-color;
+          color: $white;
           background: transparent;
           box-shadow: none;
       }

@@ -6,7 +6,7 @@
   margin-top: 30px;
   border-radius: $border-radius-large;
   color: $gray-dark;
-  background: $white-color;
+  background: $white;
   width: 100%;
 
     .card-category:not([class*="text-"]) {
@@ -99,7 +99,7 @@
       border-bottom: none;
       background: transparent;
         .title{
-            color: $white-color;
+            color: $white;
         }
 
         &:not([class*="card-header-"]){
@@ -129,7 +129,7 @@
                 position: absolute;
                 bottom: 15px;
                 left: 15px;
-                color: $white-color;
+                color: $white;
                 font-size: $font-size-h4;
                 text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
             }
@@ -214,49 +214,49 @@
     .card-header-primary .card-icon,
     .card-header-primary:not(.card-header-icon):not(.card-header-text),
     .card-header-primary .card-text{
-        @include shadow-big-color($brand-primary);
+        @include shadow-big-color($primary);
 
-        //@include shadow-8dp-color($brand-primary);
-        //@include shadow-16dp-color($brand-primary);
+        //@include shadow-8dp-color($primary);
+        //@include shadow-16dp-color($primary);
     }
     .card-header-danger .card-icon,
     .card-header-danger:not(.card-header-icon):not(.card-header-text),
     .card-header-danger .card-text{
-        @include shadow-big-color($brand-danger);
+        @include shadow-big-color($danger);
     }
 
     .card-header-rose .card-icon,
     .card-header-rose:not(.card-header-icon):not(.card-header-text),
     .card-header-rose .card-text{
-        @include shadow-big-color($brand-rose);
+        @include shadow-big-color($rose);
     }
 
     .card-header-warning .card-icon,
     .card-header-warning:not(.card-header-icon):not(.card-header-text),
     .card-header-warning .card-text{
-        @include shadow-big-color($brand-warning);
+        @include shadow-big-color($warning);
     }
 
     .card-header-info .card-icon,
     .card-header-info:not(.card-header-icon):not(.card-header-text),
     .card-header-info .card-text{
-        @include shadow-big-color($brand-info);
+        @include shadow-big-color($info);
     }
 
     .card-header-success .card-icon,
     .card-header-success:not(.card-header-icon):not(.card-header-text),
     .card-header-success .card-text{
-        @include shadow-big-color($brand-success);
+        @include shadow-big-color($success);
     }
 
     [class*="card-header-"],
     &[class*="bg-"]{
-        color: $white-color;
+        color: $white;
 
         .card-title a,
         .card-title,
         .icon i{
-            color: $white-color;
+            color: $white;
         }
 
         .icon i{
@@ -273,7 +273,7 @@
             &:hover,
             &:focus,
             &:active{
-                color: $white-color;
+                color: $white;
             }
         }
     }
@@ -489,7 +489,7 @@
       .card-title + .card-category{
         color: rgba(255, 255, 255, 0.8);
         a {
-          color: $white-color;
+          color: $white;
         }
       }
 
@@ -515,7 +515,7 @@
         margin-right: 0;
 
         .card-title{
-          color: $white-color;
+          color: $white;
           margin-top: 0;
         }
       }
@@ -524,15 +524,15 @@
 
       .ct-chart{
         .card-title{
-            color: $white-color;
+            color: $white;
         }
         .card-category{
             margin-bottom: 0;
-            color: rgba($white-color, .62);
+            color: rgba($white, .62);
         }
 
         .ct-label{
-            color: rgba($white-color, .7);
+            color: rgba($white, .7);
         }
         .ct-grid{
             stroke: rgba(255, 255, 255, 0.2);
