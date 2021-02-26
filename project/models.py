@@ -16,13 +16,13 @@ class User(UserMixin, db.Model):
     isAdmin = db.Column(db.Boolean, default=False)
 
 
-class Fuente(db.Model):
-    """ Fuente de dinero. Puede ser propia o ajena """
-    __tablename__ = 'fuente'
+class Cuenta(db.Model):
+    """ Cuenta de dinero. Puede ser propia o ajena """
+    __tablename__ = 'cuenta'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100))
-    tipo = db.Column(db.String(10)) #propia, externa, deuda
+    tipo = db.Column(db.String(30)) #propia, externa, deuda
     total = db.Column(db.Integer)
 
 
@@ -34,10 +34,10 @@ class Transaccion(db.Model):
 
     quien_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     registra_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
-    origen_id = db.Column(db.Integer, db.ForeignKey('fuente.id'))
-    destino_id = db.Column(db.Integer, db.ForeignKey('fuente.id'))
+    origen_id = db.Column(db.Integer, db.ForeignKey('cuenta.id'))
+    destino_id = db.Column(db.Integer, db.ForeignKey('cuenta.id'))
 
     quien = db.relationship(User, foreign_keys=quien_id, backref="transacciones_realizadas")
     registra = db.relationship(User, foreign_keys=registra_id, backref="transacciones_registradas")
-    origen = db.relationship(Fuente, foreign_keys=origen_id, backref="egresos")
-    destino = db.relationship(Fuente, foreign_keys=destino_id, backref="ingresos")
+    origen = db.relationship(Cuenta, foreign_keys=origen_id, backref="egresos")
+    destino = db.relationship(Cuenta, foreign_keys=destino_id, backref="ingresos")

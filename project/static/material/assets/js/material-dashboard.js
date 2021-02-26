@@ -162,7 +162,7 @@ $(document).ready(function() {
         hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
         $this.attr("data-count", hover_count);
 
-        if (hover_count >= 20) {
+        if (hover_count >= 10) {
           $(this).children('.card-header, .card-header-image').addClass('hinge animated');
         }
       });

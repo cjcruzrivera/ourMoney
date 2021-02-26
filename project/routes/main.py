@@ -11,4 +11,4 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     users = User.query.all()
-    return render_template('index.html', users=users)
+    return render_template('index.html', page_title="Dashboard", users=users, user={'nombre': "camilo"})
