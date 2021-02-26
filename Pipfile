@@ -12,6 +12,7 @@ gunicorn = "*"
 wrapt = "*"
 psycopg2-binary = "*"
 pylint = "*"
+pylint-flask-sqlalchemy = "*"
 
 [dev-packages]
 
