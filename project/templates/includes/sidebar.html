@@ -47,26 +47,47 @@
             </div>
         </div>
         <ul class="nav">
-            <li class="nav-item active ">
+            <li class="nav-item 
+            {% if url_for(request.endpoint) == '/' %}
+                active
+            {% endif %} ">
                 <a class="nav-link" href="{{url_for('main.index')}}">
                     <i class="material-icons">dashboard</i>
                     <p> Dashboard </p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/static/material/examples/widgets.html">
+            <li class="nav-item 
+            {% if url_for(request.endpoint) == '/admin' %}
+                active
+            {% endif %}">
+                <a class="nav-link" href='{{url_for("main.admin")}}'>
+                    <i class="material-icons">admin_panel_settings</i>
+                    <p> Administracion </p>
+                </a>
+            </li>
+            <li class="nav-item 
+            {% if url_for(request.endpoint) == '/cuentas' %}
+                active
+            {% endif %}">
+                <a class="nav-link" href='{{url_for("main.cuentas")}}'>
                     <i class="material-icons">account_balance</i>
                     <p> Cuentas </p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/static/material/examples/charts.html">
+            <li class="nav-item 
+            {% if url_for(request.endpoint) == '/movimientos' %}
+                active
+            {% endif %}">
+                <a class="nav-link" href='{{url_for("main.movimientos")}}'>
                     <i class="material-icons">mediation</i>
                     <p> Movimientos </p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/static/material/examples/calendar.html">
+            <li class="nav-item 
+            {% if url_for(request.endpoint) == '/reportes' %}
+                active
+            {% endif %}">
+                <a class="nav-link" href='{{url_for("main.reportes")}}'>
                     <i class="material-icons">summarize</i>
                     <p> Reportes </p>
                 </a>
@@ -74,12 +95,18 @@
             <li class="nav-item ">
                 <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
                     <i class="material-icons">image</i>
-                    <p> Pages
+                    <p> Material Pages
                         <b class="caret"></b>
                     </p>
                 </a>
                 <div class="collapse" id="pagesExamples">
                     <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/static/material/examples/dashboard.html">
+                                <i class="material-icons">dashboard</i>
+                                <p> Dashboard </p>
+                            </a>
+                        </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="/static/material/examples/pages/pricing.html">
                                 <span class="sidebar-mini"> P </span>
