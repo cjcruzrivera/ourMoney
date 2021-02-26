@@ -10,5 +10,20 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    users = User.query.all()
-    return render_template('index.html', users=users)
+    return render_template('index.html', user={'nombre': "camilo"})
+
+@main.route('/cuentas')
+def cuentas():
+    return render_template('cuentas.html', user={'nombre': "camilo"})
+
+@main.route('/movimientos')
+def movimientos():
+    return render_template('movimientos.html', user={'nombre': "camilo"})
+
+@main.route('/reportes')
+def reportes():
+    return render_template('reportes.html', user={'nombre': "camilo"})
+
+@main.route('/admin')
+def admin():
+    return render_template('admin.html', user={'nombre': "camilo"})
