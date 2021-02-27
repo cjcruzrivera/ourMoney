@@ -1,5 +1,7 @@
 """ Models for the app """
 from flask_login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from .extensions import db
 
 class User(UserMixin, db.Model):
@@ -7,13 +9,19 @@ class User(UserMixin, db.Model):
     __tablename__ = 'usuario'
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100))
     password = db.Column(db.String(100))
-    username = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True)
     nombre = db.Column(db.String(100))
     apellidos = db.Column(db.String(100))
     img = db.Column(db.String(500))
     isAdmin = db.Column(db.Boolean, default=False)
+
+    @hybrid_property
+    def nombre_completo(self):
+        """ Nombre Completo del Usuario """
+        return "{} {}".format(self.nombre, self.apellidos)
+
 
 
 class Cuenta(db.Model):
