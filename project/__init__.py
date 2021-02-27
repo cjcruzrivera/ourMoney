@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from .commands import create_tables
+from .commands import create_tables, create_admin
 from .extensions import db, login_manager
 
 
@@ -28,5 +28,6 @@ def create_app(config_file='settings.py'):
     app.register_blueprint(main_blueprint)
 
     app.cli.add_command(create_tables)
+    app.cli.add_command(create_admin)
 
     return app
