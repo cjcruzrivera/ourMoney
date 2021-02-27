@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, login_required
 from ..models import User
 from ..extensions import db
@@ -9,23 +9,34 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
-    return render_template('login.html')
+    next_page = ""
+    param = request.args.get('next')
+
+    if param is not None:
+        next_page = param
+
+    return render_template('login.html', next_page=next_page)
 
 @auth.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
+    username = request.form.get('username')
     password = request.form.get('password')
-    print(email)
-    print(password)
-    user = User.query.filter_by(email=email).first()
+    req_next_page = request.form.get('next_page', "")
 
-    # check if the user actually exists
+    if req_next_page == "":
+        next_page = url_for("main.index")
+    else:
+        next_page = req_next_page
+    
+    user = User.query.filter_by(username=username).first()
+
+    # check if the user actually exists TODO: Cambiar validacion para mensaje concreto
     if not user or not check_password_hash(user.password, password):
-        flash('Email o contraseña incorrectos', 'danger')
+        flash('Nombre de Usuario o contraseña incorrectos', 'danger')
         return redirect(url_for('auth.login'))
 
     login_user(user)
-    return redirect(url_for('main.index'))
+    return redirect(next_page)
 
 
 @auth.route('/logout')

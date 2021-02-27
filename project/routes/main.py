@@ -11,28 +11,27 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @login_required
 def index():
-    return render_template('index.html', user={'nombre': "camilo"})
+    return render_template('index.html')
 
 @main.route('/cuentas')
 @login_required
 def cuentas():
-    return render_template('cuentas.html', user={'nombre': "camilo"})
+    return render_template('cuentas.html')
 
 @main.route('/movimientos')
 @login_required
 def movimientos():
-    return render_template('movimientos.html', user={'nombre': "camilo"})
+    return render_template('movimientos.html')
 
 @main.route('/reportes')
 @login_required
 def reportes():
-    return render_template('reportes.html', user={'nombre': "camilo"})
+    return render_template('reportes.html')
 
 @main.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html', user={'nombre': "camilo"})
-
+    return render_template('admin.html')
 
 
 @main.errorhandler(404)
