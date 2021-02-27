@@ -13,6 +13,7 @@ wrapt = "*"
 psycopg2-binary = "*"
 pylint = "*"
 pylint-flask-sqlalchemy = "*"
+autopep8 = "*"
 
 [dev-packages]
 
