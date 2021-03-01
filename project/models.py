@@ -33,6 +33,11 @@ class Cuenta(db.Model):
     tipo = db.Column(db.String(30)) #propia, externa, deuda
     total = db.Column(db.Integer)
 
+    @hybrid_property
+    def saldo(self):
+        """ total formated """
+        return "${:,.0f}".format(self.total)
+
 
 class Transaccion(db.Model):
     """ Transaccion de dinero """
