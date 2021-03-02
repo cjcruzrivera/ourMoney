@@ -43,14 +43,15 @@ class Transaccion(db.Model):
     """ Transaccion de dinero """
     id = db.Column(db.Integer, primary_key=True)
     valor = db.Column(db.Integer)
-    fecha = db.Column(db.DateTime)
+    fecha_realiza = db.Column(db.DateTime)
+    fecha_registra = db.Column(db.DateTime)
 
-    quien_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+    realiza_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     registra_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     origen_id = db.Column(db.Integer, db.ForeignKey('cuenta.id'))
     destino_id = db.Column(db.Integer, db.ForeignKey('cuenta.id'))
 
-    quien = db.relationship(User, foreign_keys=quien_id, backref="transacciones_realizadas")
+    realiza = db.relationship(User, foreign_keys=realiza_id, backref="transacciones_realizadas")
     registra = db.relationship(User, foreign_keys=registra_id, backref="transacciones_registradas")
     origen = db.relationship(Cuenta, foreign_keys=origen_id, backref="egresos")
     destino = db.relationship(Cuenta, foreign_keys=destino_id, backref="ingresos")

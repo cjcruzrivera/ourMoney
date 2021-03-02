@@ -75,12 +75,12 @@
                 </a>
             </li>
             <li class="nav-item 
-            {% if request.url_rule.endpoint == 'main.movimientos' %}
+            {% if request.url_rule.endpoint == 'main.transacciones' %}
                 active
             {% endif %}">
-                <a class="nav-link" href='{{url_for("main.movimientos")}}'>
+                <a class="nav-link" href='{{url_for("main.transacciones")}}'>
                     <i class="material-icons">mediation</i>
-                    <p> Movimientos </p>
+                    <p> Transacciones </p>
                 </a>
             </li>
             <li class="nav-item 

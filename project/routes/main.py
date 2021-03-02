@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, flash, url_for
 from flask_login import login_required#, current_user
 
-from ..models import Cuenta
+from ..models import Cuenta, Transaccion
 from ..extensions import db
 # from .models import User, Calculo
 # from ..models import User
@@ -90,13 +90,33 @@ def eliminar_cuenta(cuenta_id):
     flash('Cuenta con id "{}" eliminada correctamente'.format(cuenta_id), 'warning')
     return redirect(url_for('main.cuentas'))
 
-'''""" Modulo de Movimientos """'''
+'''""" Modulo de transacciones """'''
 
-@main.route('/movimientos')
+@main.route('/transacciones/crear', methods=['GET', 'POST'])
 @login_required
-def movimientos():
-    return render_template('movimientos.html')
+def crear_transaccion():
+    """ Crear transaccion. C"""
+    return render_template('transacciones/crear_transaccion.html')
 
+
+
+@main.route('/transacciones')
+@login_required
+def transacciones():
+    """ Lista de transacciones. R"""
+    return render_template('transacciones/transacciones.html')
+
+@main.route('/transacciones/editar/<transaccion_id>', methods=['GET', 'POST'])
+@login_required
+def editar_transaccion(transaccion_id):
+    """ Editar una transaccion. U """
+    pass
+
+@main.route('/transacciones/eliminar/<transaccion_id>', methods=['GET', 'POST'])
+@login_required
+def eliminar_transaccion(transaccion_id):
+    """ eliminar una transaccion. U """
+    pass
 
 '''""" Modulo de Reportes """'''
 

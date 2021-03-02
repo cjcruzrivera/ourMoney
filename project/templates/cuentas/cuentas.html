@@ -12,17 +12,7 @@
             </ol>
         </nav>
     </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}.
-    </div>
-    {% endfor %}
-
-    {% endif %}
-    {% endwith %}
-
+    {% include "/includes/messages.html" %}
     <div class="row mt-4 mb-4">
         <div class="col-md-4">
             <a href="{{url_for('main.crear_cuenta')}}" class="btn btn-success">Nuevo</a>
@@ -73,52 +63,7 @@
 {% endblock %}
 
 {% block extrajs %}
-<!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-<!-- <script src="/static/material/assets/js/plugins/jquery.dataTables.min.js"></script>  TODO: Separar todos los includes del base -->
-<script>
-    $(document).ready(function () {
-        $('#datatable').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "order": [[ 1, "asc" ]],
-            responsive: true,
-            "language": {
-                "lengthMenu": "Mostrando _MENU_ registros por página",
-                "zeroRecords": "No se encuentran registros",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "infoEmpty": "No se encuentran registros",
-                "infoFiltered": "(Filtrado de _MAX_ registros totales)",
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primera",
-                    "last": "Última",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }
-        });
 
-        var table = $('#datatable').DataTable();
+    {% include 'includes/datatables.html' %}
 
-        // Edit record
-        table.on('click', '.edit', function () {
-            // $tr = $(this).closest('tr');
-            // var data = table.row($tr).data();
-            // alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-        });
-
-        // Delete a record
-        table.on('click', '.remove', function (e) {
-            // TODO: Add sweetAlert to confirm
-            // $tr = $(this).closest('tr');
-            // table.row($tr).remove().draw();
-            // e.preventDefault();
-        });
-
-    });
-</script>
 {% endblock %}

@@ -1,0 +1,56 @@
+{% extends "/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Crear Transaccion</h2>
+
+    <div class="row">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{url_for('main.transacciones')}}">Lista de Transacciones</a></li>
+                <li class="breadcrumb-item active">Nueva Transaccion</li>
+            </ol>
+        </nav>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{{url_for('main.crear_transaccion')}}" class="form" method="POST">
+                <div class="form-row">
+                    <div class="col-md-4 form-group">
+                        <label for="nombre">Cuenta Origen:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="nombre">Cuenta Destino:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
+                        <label for="total">Valor</label>
+                        <input type="number" name="total" id="total" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <label for="nombre">Responsable:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nombre">Fecha:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Guardar Transaccion</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- TODO: Añadir validator -->
