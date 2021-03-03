@@ -12729,7 +12729,7 @@ a {
   .sidebar[data-background-color="black"] .simple-text {
     color: #ffffff; }
   .sidebar[data-background-color="black"] .sidebar-background:after {
-    background: #000;
+    background: rgba(0, 0, 0, 0.5);
     opacity: .8; }
   .sidebar[data-background-color="black"] .nav li .dropdown-menu .dropdown-item {
     color: #ffffff; }

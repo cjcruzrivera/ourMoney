@@ -17,13 +17,21 @@
         <div class="col-md-12">
             <form action="{{url_for('main.crear_transaccion')}}" class="form" method="POST">
                 <div class="form-row">
-                    <div class="col-md-4 form-group">
-                        <label for="nombre">Cuenta Origen:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    <div class="col-md-3 form-group">
+                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                            <option disabled selected>Cuenta Origen</option>
+                            <option value="Propia">Propia</option>
+                            <option value="Externa">Externa</option>
+                            <option value="Deuda">Deuda</option>
+                          </select>
                     </div>
-                    <div class="col-md-4 form-group">
-                        <label for="nombre">Cuenta Destino:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    <div class="col-md-3 form-group">
+                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                            <option disabled selected>Cuenta Destino</option>
+                            <option value="Propia">Propia</option>
+                            <option value="Externa">Externa</option>
+                            <option value="Deuda">Deuda</option>
+                          </select>
                     </div>
 
                     <div class="col-md-3 form-group">
@@ -33,13 +41,17 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="col-md-4">
-                        <label for="nombre">Responsable:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    <div class="col-md-3">
+                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                            <option disabled selected>Quien Realiza</option>
+                            <option value="Propia">Propia</option>
+                            <option value="Externa">Externa</option>
+                            <option value="Deuda">Deuda</option>
+                          </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="nombre">Fecha:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                        <label class="label-control" for="nombre">Fecha:</label>
+                        <input type="text" class="form-control datetimepicker" value=""/>
                     </div>
                 </div>
                 <div class="form-row">
@@ -54,3 +66,20 @@
 {% endblock %}
 
 <!-- TODO: Añadir validator -->
+{% block extrajs %}
+  <script>
+    $('.datetimepicker').datetimepicker({
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        }
+    });
+  </script>
+{% endblock %}
