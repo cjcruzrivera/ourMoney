@@ -20,17 +20,17 @@
                     <div class="col-md-3 form-group">
                         <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
                             <option disabled selected>Cuenta Origen</option>
-                            <option value="Propia">Propia</option>
-                            <option value="Externa">Externa</option>
-                            <option value="Deuda">Deuda</option>
-                          </select>
+                            {% for cuenta in cuentas %}
+                                <option value="{{cuenta.id}}">{{cuenta.nombre}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="col-md-3 form-group">
                         <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
                             <option disabled selected>Cuenta Destino</option>
-                            <option value="Propia">Propia</option>
-                            <option value="Externa">Externa</option>
-                            <option value="Deuda">Deuda</option>
+                            {% for cuenta in cuentas %}
+                                <option value="{{cuenta.id}}">{{cuenta.nombre}}</option>
+                            {% endfor %}
                           </select>
                     </div>
 
@@ -44,9 +44,9 @@
                     <div class="col-md-3">
                         <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
                             <option disabled selected>Quien Realiza</option>
-                            <option value="Propia">Propia</option>
-                            <option value="Externa">Externa</option>
-                            <option value="Deuda">Deuda</option>
+                            {% for usuario in usuarios %}
+                                <option value="{{usuario.id}}"> {{usuario.nombre_completo}}</option>
+                            {% endfor %}
                           </select>
                     </div>
                     <div class="col-md-4">
