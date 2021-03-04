@@ -18,7 +18,7 @@
             <form action="{{url_for('main.crear_transaccion')}}" class="form" method="POST">
                 <div class="form-row">
                     <div class="col-md-3 form-group">
-                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                        <select class="selectpicker" name="origen" data-style="btn btn-sm btn-primary btn-round w-100" title="Cuenta Origen de la Transaccion">
                             <option disabled selected>Cuenta Origen</option>
                             {% for cuenta in cuentas %}
                                 <option value="{{cuenta.id}}">{{cuenta.nombre}}</option>
@@ -26,7 +26,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                        <select class="selectpicker" name="destino" data-style="btn btn-sm btn-primary btn-round w-100" title="Cuenta Destino de la Transaccion">
                             <option disabled selected>Cuenta Destino</option>
                             {% for cuenta in cuentas %}
                                 <option value="{{cuenta.id}}">{{cuenta.nombre}}</option>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-row">
                     <div class="col-md-3">
-                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-primary btn-round w-100" title="Tipo Cuenta">
+                        <select class="selectpicker" name="realiza" data-style="btn btn-sm btn-primary btn-round w-100" title="Usuario el cual realizó la transaccion">
                             <option disabled selected>Quien Realiza</option>
                             {% for usuario in usuarios %}
                                 <option value="{{usuario.id}}"> {{usuario.nombre_completo}}</option>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="label-control" for="nombre">Fecha:</label>
-                        <input type="text" class="form-control datetimepicker" value=""/>
+                        <input type="text" class="form-control datetimepicker" name="fecha_realiza" value=""/>
                     </div>
                 </div>
                 <div class="form-row">

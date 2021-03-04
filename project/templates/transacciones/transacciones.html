@@ -49,9 +49,9 @@
                         <td>{{transaccion.destino.nombre}}</td>
                         <td>{{transaccion.realiza.nombre_completo}}</td>
                         <!-- TODO: añadir tooltip con usuario registra -->
-                        <td>{{transaccion.fecha_realiza}}</td>
+                        <td>{{transaccion.fecha_realiza.strftime('%d-%m-%Y')}}</td>
                         <!-- TODO: añadir tooltip con fecha registra -->
-                        <td>
+                        <td> 
                             <a href="{{url_for('main.editar_transaccion', transaccion_id=transaccion.id)}}" class="btn btn-sm btn-info edit"><span class="material-icons">create</span></a>
                             <a href="{{url_for('main.eliminar_transaccion', transaccion_id=transaccion.id)}}" class="btn btn-sm btn-danger remove"><span
                                     class="material-icons">delete</span></a>
