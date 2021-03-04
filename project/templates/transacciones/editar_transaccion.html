@@ -1,0 +1,98 @@
+{% extends "/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Editar Transaccion</h2>
+
+    <div class="row">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{url_for('main.transacciones')}}">Lista de Transacciones</a></li>
+                <li class="breadcrumb-item"><a href="#">Editar Transaccion</a></li>
+                <li class="breadcrumb-item active">Transaccion {{transaccion.id}}</li>
+            </ol>
+        </nav>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{{url_for('main.crear_transaccion')}}" class="form" method="POST">
+                <div class="form-row">
+                    <div class="col-md-3 form-group">
+                        <select class="selectpicker" name="origen" data-style="btn btn-sm btn-primary btn-round w-100" title="Cuenta Origen de la Transaccion">
+                            <option disabled selected>Cuenta Origen</option>
+                            {% for cuenta in cuentas %}
+                                <option
+                                {% if transaccion.origen == cuenta %}
+                                    selected
+                                {% endif %}
+                                value="{{cuenta.id}}">{{cuenta.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <select class="selectpicker" name="destino" data-style="btn btn-sm btn-primary btn-round w-100" title="Cuenta Destino de la Transaccion">
+                            <option disabled selected>Cuenta Destino</option>
+                            {% for cuenta in cuentas %}
+                                <option 
+                                {% if transaccion.destino == cuenta %}
+                                    selected
+                                {% endif %}
+                                value="{{cuenta.id}}">{{cuenta.nombre}}</option>
+                            {% endfor %}
+                          </select>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
+                        <label for="total">Valor</label>
+                        <input type="number" name="total" id="total" class="form-control" value="{{transaccion.valor}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <select class="selectpicker" name="realiza" data-style="btn btn-sm btn-primary btn-round w-100" title="Usuario el cual realizó la transaccion">
+                            <option disabled selected>Quien Realiza</option>
+                            {% for usuario in usuarios %}
+                                <option
+                                {% if transaccion.realiza == usuario %}
+                                    selected
+                                {% endif %}
+                                value="{{usuario.id}}"> {{usuario.nombre_completo}}</option>
+                            {% endfor %}
+                          </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="label-control" for="nombre">Fecha:</label>
+                        <input type="text" class="form-control datetimepicker" name="fecha_realiza" value="{{transaccion.fecha_realiza}}"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Editar Transaccion</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- TODO: Añadir validator -->
+{% block extrajs %}
+  <script>
+    $('.datetimepicker').datetimepicker({
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        }
+    });
+  </script>
+{% endblock %}

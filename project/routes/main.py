@@ -10,13 +10,16 @@ from ..extensions import db
 
 main = Blueprint('main', __name__)
 
+
 @main.route('/')
 @login_required
 def index():
     """ Dashboard """
     return render_template('index.html')
 
+
 '''""" Modulo de Cuentas """'''
+
 
 @main.route('/cuentas/crear', methods=['POST', 'GET'])
 @login_required
@@ -29,7 +32,7 @@ def crear_cuenta():
 
     cuenta = Cuenta.query.filter_by(nombre=nombre).first()
     if cuenta:
-        flash('Ya existe una cuenta con ese nombre' , 'danger')
+        flash('Ya existe una cuenta con ese nombre', 'danger')
         return redirect(url_for('main.crear_cuenta'))
 
     # TODO: Validar Saldo como dato obligatorio en caso de cuenta propia
@@ -50,11 +53,13 @@ def cuentas():
     cuentas_reg = Cuenta.query.order_by(Cuenta.id).all()
     return render_template('cuentas/cuentas.html', cuentas=cuentas_reg)
 
+
 @main.route('/cuentas/editar/<cuenta_id>', methods=['GET', 'POST'])
 @login_required
 def editar_cuenta(cuenta_id):
     """ Editar una cuenta. U """
-    cuenta = Cuenta.query.filter_by(id=cuenta_id).first_or_404(description="No se encuentra ninguna cuenta registrada con id {}".format(cuenta_id))
+    cuenta = Cuenta.query.filter_by(id=cuenta_id).first_or_404(
+        description="No se encuentra ninguna cuenta registrada con id {}".format(cuenta_id))
     if request.method == "GET":
         return render_template("cuentas/editar_cuenta.html", cuenta=cuenta)
 
@@ -62,7 +67,7 @@ def editar_cuenta(cuenta_id):
 
     cuenta_valid = Cuenta.query.filter_by(nombre=nombre).first()
     if cuenta_valid and cuenta.id != cuenta_valid.id:
-        flash('Ya existe una cuenta con ese nombre' , 'danger')
+        flash('Ya existe una cuenta con ese nombre', 'danger')
         return redirect(url_for('main.editar_cuenta', ))
 
     # TODO: Validar Saldo como dato obligatorio en caso de cuenta propia
@@ -78,19 +83,22 @@ def editar_cuenta(cuenta_id):
     return redirect(url_for('main.cuentas'))
 
 
-# TODO: El crear y editar debe quedar en un modal
+#TODO: El crear y editar debe quedar en un modal
 
 @main.route('/cuentas/eliminar/<cuenta_id>')
 @login_required
 def eliminar_cuenta(cuenta_id):
     """ Eliminar una cuenta. D """
-    cuenta = Cuenta.query.filter_by(id=cuenta_id).first_or_404(description="No se encuentra ninguna cuenta registrada con id {}".format(cuenta_id))
+    cuenta = Cuenta.query.filter_by(id=cuenta_id).first_or_404(
+        description="No se encuentra ninguna cuenta registrada con id {}".format(cuenta_id))
     db.session.delete(cuenta)
     db.session.commit()
     flash('Cuenta con id "{}" eliminada correctamente'.format(cuenta_id), 'warning')
     return redirect(url_for('main.cuentas'))
 
+
 '''""" Modulo de transacciones """'''
+
 
 @main.route('/transacciones/crear', methods=['GET', 'POST'])
 @login_required
@@ -100,7 +108,7 @@ def crear_transaccion():
         usuarios = User.query.all()
         cuentas = Cuenta.query.all()
         return render_template('transacciones/crear_transaccion.html', usuarios=usuarios, cuentas=cuentas)
-    
+
     origen_id = request.form.get("origen")
     destino_id = request.form.get("destino")
     realiza_id = request.form.get("realiza")
@@ -115,16 +123,21 @@ def crear_transaccion():
     if origen.tipo == "Propia":
         origen.total -= int(valor)
 
+    if origen.tipo == "Deuda":
+        origen.total += int(valor)
+
     if destino.tipo == "Propia":
         destino.total += int(valor)
 
     if destino.tipo == "Deuda":
         destino.total -= int(valor)
-    
-    transaccion = Transaccion(valor=valor, origen=origen, destino=destino, registra=current_user, realiza=realiza, fecha_realiza=fecha_realiza, fecha_registra=datetime.today())
 
-    objects = [origen, destino, transaccion]
+    transaccion = Transaccion(valor=valor, origen=origen, destino=destino, registra=current_user,
+                              realiza=realiza, fecha_realiza=fecha_realiza, fecha_registra=datetime.today())
+
+    objects = [origen, destino]
     db.session.bulk_save_objects(objects)
+    db.session.add(transaccion)
     db.session.commit()
     flash("Transaccion registrada correctamente", 'success')
     return redirect(url_for('main.transacciones'))
@@ -134,33 +147,64 @@ def crear_transaccion():
 @login_required
 def transacciones():
     """ Lista de transacciones. R"""
-    transacciones = Transaccion.query.all()
-    return render_template('transacciones/transacciones.html', transacciones=transacciones)
+    transacciones_registradas = Transaccion.query.all()
+    return render_template('transacciones/transacciones.html', transacciones=transacciones_registradas)
+
 
 @main.route('/transacciones/editar/<transaccion_id>', methods=['GET', 'POST'])
 @login_required
 def editar_transaccion(transaccion_id):
     """ Editar una transaccion. U """
-    pass
+    transaccion = Transaccion.query.filter_by(id=transaccion_id).first_or_404(
+        description="No se encuentra ninguna transaccion registrada con id {}".format(transaccion_id))
+    usuarios = User.query.all()
+    cuentas_reg = Cuenta.query.all()
+    if request.method == "GET":
+        return render_template('transacciones/editar_transaccion.html', transaccion=transaccion, usuarios=usuarios, cuentas=cuentas_reg)
+
 
 @main.route('/transacciones/eliminar/<transaccion_id>', methods=['GET', 'POST'])
 @login_required
 def eliminar_transaccion(transaccion_id):
-    """ eliminar una transaccion. U """
-    transaccion = Transaccion.query.filter_by(id=transaccion_id).first_or_404(description="No se encuentra ninguna transaccion registrada con id {}".format(transaccion_id))
+    """ eliminar una transaccion. D """
+    transaccion = Transaccion.query.filter_by(id=transaccion_id).first_or_404(
+        description="No se encuentra ninguna transaccion registrada con id {}".format(transaccion_id))
+
+    origen = transaccion.origen#Cuenta.query.filter_by(id=transaccion.origen_id).first()
+    destino = transaccion.destino#Cuenta.query.filter_by(id=transaccion.destino_id).first()
+
+    if origen.tipo == "Propia":
+        origen.total += int(transaccion.valor)
+
+    if origen.tipo == "Deuda":
+        origen.total -= int(transaccion.valor)
+
+    if destino.tipo == "Propia":
+        destino.total -= int(transaccion.valor)
+
+    if destino.tipo == "Deuda":
+        destino.total += int(transaccion.valor)
+
+    objects = [origen, destino]
+    db.session.bulk_save_objects(objects)
     db.session.delete(transaccion)
     db.session.commit()
-    flash('Transaccion con id "{}" eliminada correctamente'.format(transaccion_id), 'warning')
+    flash('Transaccion con id "{}" eliminada correctamente'.format(
+        transaccion_id), 'warning')
     return redirect(url_for('main.transacciones'))
 
+
 '''""" Modulo de Reportes """'''
+
 
 @main.route('/reportes')
 @login_required
 def reportes():
     return render_template('reportes.html')
 
+
 '''""" Modulo de Administrador """'''
+
 
 @main.route('/admin')
 @login_required
@@ -169,6 +213,7 @@ def admin():
 
 
 '''""" Modulo de Errores. TODO:Arreglar Handler """'''
+
 
 @main.errorhandler(404)
 def page_not_found(error):
