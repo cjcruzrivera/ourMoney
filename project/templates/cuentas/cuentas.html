@@ -45,13 +45,25 @@
                         <td>{{cuenta.tipo}}</td>
                         <td>{% if cuenta.tipo=="Propia" %}
                             {{cuenta.saldo}}
+                            {% elif cuenta.tipo=="Deuda" %}
+                            <div class="badge badge-pill 
+                                {% if cuenta.total == 0 %}
+                                badge-success
+                                {% else %}
+                                badge-danger
+                                {% endif %}
+                            ">
+                                {{cuenta.saldo}}
+                            </div>
                             {% else %}
                             No aplica
-                            {% endif %}</td>
+                            {% endif %}
+                        </td>
                         <td>
-                            <a href="{{url_for('main.editar_cuenta', cuenta_id=cuenta.id)}}" class="btn btn-sm btn-info edit"><span class="material-icons">create</span></a>
-                            <a href="{{url_for('main.eliminar_cuenta', cuenta_id=cuenta.id)}}" class="btn btn-sm btn-danger remove"><span
-                                    class="material-icons">delete</span></a>
+                            <a href="{{url_for('main.editar_cuenta', cuenta_id=cuenta.id)}}"
+                                class="btn btn-sm btn-info edit"><span class="material-icons">create</span></a>
+                            <a href="{{url_for('main.eliminar_cuenta', cuenta_id=cuenta.id)}}"
+                                class="btn btn-sm btn-danger remove"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -64,6 +76,6 @@
 
 {% block extrajs %}
 
-    {% include 'includes/datatables.html' %}
+{% include 'includes/datatables.html' %}
 
 {% endblock %}

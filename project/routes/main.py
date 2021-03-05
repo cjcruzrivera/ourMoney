@@ -76,7 +76,7 @@ def editar_cuenta(cuenta_id):
     cuenta.nombre = nombre
     cuenta.tipo = tipo
     cuenta.total = total
-    # TODO: El total no deberia poderse editar
+
     db.session.add(cuenta)
     db.session.commit()
     flash("Cuenta '{}' editada correctamente".format(nombre), 'success')
@@ -106,8 +106,8 @@ def crear_transaccion():
     """ Crear transaccion. C"""
     if request.method == "GET":
         usuarios = User.query.all()
-        cuentas = Cuenta.query.all()
-        return render_template('transacciones/crear_transaccion.html', usuarios=usuarios, cuentas=cuentas)
+        cuentas_reg = Cuenta.query.all()
+        return render_template('transacciones/crear_transaccion.html', usuarios=usuarios, cuentas=cuentas_reg)
 
     origen_id = request.form.get("origen")
     destino_id = request.form.get("destino")
@@ -120,17 +120,9 @@ def crear_transaccion():
     destino = Cuenta.query.filter_by(id=destino_id).first()
     realiza = User.query.filter_by(id=realiza_id).first()
 
-    if origen.tipo == "Propia":
-        origen.total -= int(valor)
-
-    if origen.tipo == "Deuda":
-        origen.total += int(valor)
-
-    if destino.tipo == "Propia":
-        destino.total += int(valor)
-
-    if destino.tipo == "Deuda":
-        destino.total -= int(valor)
+    origen.set_valor_origen(valor, reversed_trans=False)
+    destino.set_valor_destino(valor, reversed_trans=False)
+    
 
     transaccion = Transaccion(valor=valor, origen=origen, destino=destino, registra=current_user,
                               realiza=realiza, fecha_realiza=fecha_realiza, fecha_registra=datetime.today())
@@ -161,7 +153,42 @@ def editar_transaccion(transaccion_id):
     cuentas_reg = Cuenta.query.all()
     if request.method == "GET":
         return render_template('transacciones/editar_transaccion.html', transaccion=transaccion, usuarios=usuarios, cuentas=cuentas_reg)
+    
+    #Se reversa la transaccion original
+    origen_old = transaccion.origen
+    destino_old = transaccion.destino
+    origen_old.set_valor_origen(transaccion.valor, reversed_trans=True)
+    destino_old.set_valor_destino(transaccion.valor, reversed_trans=True)
 
+    db.session.bulk_save_objects([origen_old, destino_old])
+    db.session.commit()
+
+    #Se crea la nueva transaccion
+    origen_id = request.form.get("origen")
+    destino_id = request.form.get("destino")
+    realiza_id = request.form.get("realiza")
+    valor = request.form.get("total")
+    fecha_realiza_str = request.form.get("fecha_realiza")
+    fecha_realiza = datetime.strptime(fecha_realiza_str, '%m/%d/%Y %H:%M %p')
+
+    origen = Cuenta.query.filter_by(id=origen_id).first()
+    destino = Cuenta.query.filter_by(id=destino_id).first()
+    realiza = User.query.filter_by(id=realiza_id).first()
+
+    origen.set_valor_origen(valor, reversed_trans=False)
+    destino.set_valor_destino(valor, reversed_trans=False)
+
+    transaccion.origen = origen
+    transaccion.destino = destino
+    transaccion.valor = valor
+    transaccion.realiza = realiza
+    transaccion.fecha_realiza = fecha_realiza
+
+    db.session.bulk_save_objects([origen, destino])
+    db.session.add(transaccion)
+    db.session.commit()
+    flash("Transaccion editada correctamente", 'success')
+    return redirect(url_for('main.transacciones'))
 
 @main.route('/transacciones/eliminar/<transaccion_id>', methods=['GET', 'POST'])
 @login_required
@@ -173,17 +200,8 @@ def eliminar_transaccion(transaccion_id):
     origen = transaccion.origen#Cuenta.query.filter_by(id=transaccion.origen_id).first()
     destino = transaccion.destino#Cuenta.query.filter_by(id=transaccion.destino_id).first()
 
-    if origen.tipo == "Propia":
-        origen.total += int(transaccion.valor)
-
-    if origen.tipo == "Deuda":
-        origen.total -= int(transaccion.valor)
-
-    if destino.tipo == "Propia":
-        destino.total -= int(transaccion.valor)
-
-    if destino.tipo == "Deuda":
-        destino.total += int(transaccion.valor)
+    origen.set_valor_origen(transaccion.valor, reversed_trans=True)
+    destino.set_valor_destino(transaccion.valor, reversed_trans=True)
 
     objects = [origen, destino]
     db.session.bulk_save_objects(objects)
