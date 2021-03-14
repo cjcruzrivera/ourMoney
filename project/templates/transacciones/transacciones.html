@@ -28,9 +28,9 @@
                             <!-- TODO: Implementar Seleccionar todo?? -->
                         </th>
                         <th>ID</th>
-                        <th class="">Valor</th>
                         <th>Cuenta Origen</th>
                         <th>Cuenta Destino</th>
+                        <th class="">Valor</th>
                         <th>Responsable</th>
                         <th>Fecha</th>
                         <th class="w-15">Acciones</th>
@@ -43,10 +43,10 @@
                             <!-- TODO: Implementar Seleccionar para borrado masivo?? -->
                         </td>
                         <td>{{transaccion.id}}</td>
-                        <td>{{transaccion.valor}}</td>
                         <!-- TODO: Preguntar por white-space: nowrap; -->
                         <td>{{transaccion.origen.nombre}}</td>
                         <td>{{transaccion.destino.nombre}}</td>
+                        <td>{{transaccion.valor}}</td>
                         <td>{{transaccion.realiza.nombre_completo}}</td>
                         <!-- TODO: añadir tooltip con usuario registra -->
                         <td>{{transaccion.fecha_realiza.strftime('%d-%m-%Y')}}</td>

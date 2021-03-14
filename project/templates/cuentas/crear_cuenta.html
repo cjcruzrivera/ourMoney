@@ -25,9 +25,10 @@
                         <!-- TODO: Cambiar a select button picker -->
                         <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-round w-100" title="Tipo Cuenta">
                             <option disabled selected>Seleccione Tipo Cuenta</option>
-                            <option value="Propia">Propia</option>
-                            <option value="Externa">Externa</option>
-                            <option value="Deuda">Deuda</option>
+                            {% for key, value in tipos.items() %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                            
                           </select>
                     </div>
                     <div class="col-md-3 form-group">

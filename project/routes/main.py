@@ -26,7 +26,7 @@ def index():
 def crear_cuenta():
     """ Crear cuentas C"""
     if request.method == "GET":
-        return render_template('cuentas/crear_cuenta.html')
+        return render_template('cuentas/crear_cuenta.html', tipos = Cuenta.tipos)
 
     nombre = request.form.get("nombre")
 

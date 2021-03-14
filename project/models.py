@@ -28,6 +28,13 @@ class Cuenta(db.Model):
     """ Cuenta de dinero. Puede ser propia o ajena """
     __tablename__ = 'cuenta'
 
+    tipos = {
+        'propia': "Cuenta Propia",
+        'ingreso': "Cuenta Externa de Ingreso",
+        'egreso': "Cuenta Externa de Gasto",
+        'deuda': "Cuenta de Deuda",
+    }
+
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100))
     tipo = db.Column(db.String(30))  # propia, externa, deuda
@@ -41,32 +48,33 @@ class Cuenta(db.Model):
     def set_valor_origen(self, valor, reversed_trans=False):
         """ Set Value Cuenta Origen """
         if not reversed_trans:
-            if self.tipo == "Propia":
+            if self.tipo == "propia":
                 self.total -= int(valor)
 
-            if self.tipo == "Deuda":
+            if self.tipo == "deuda":
                 self.total += int(valor)
         else:
-            if self.tipo == "Propia":
+            if self.tipo == "propia":
                 self.total += int(valor)
 
-            if self.tipo == "Deuda":
+            if self.tipo == "deuda":
                 self.total -= int(valor)
 
     def set_valor_destino(self, valor, reversed_trans=False):
         """ Set Value Cuenta Origen """
         if not reversed_trans:
-            if self.tipo == "Propia":
+            if self.tipo == "propia":
                 self.total += int(valor)
 
-            if self.tipo == "Deuda":
+            if self.tipo == "deuda":
                 self.total -= int(valor)
         else:
-            if self.tipo == "Propia":
+            if self.tipo == "propia":
                 self.total -= int(valor)
 
-            if self.tipo == "Deuda":
+            if self.tipo == "deuda":
                 self.total += int(valor)
+
 
 class Transaccion(db.Model):
     """ Transaccion de dinero """

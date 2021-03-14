@@ -42,10 +42,10 @@
                         <td>{{cuenta.id}}</td>
                         <td>{{cuenta.nombre}}</td>
                         <!-- TODO: Preguntar por white-space: nowrap; -->
-                        <td>{{cuenta.tipo}}</td>
-                        <td>{% if cuenta.tipo=="Propia" %}
+                        <td>{{cuenta.tipos[cuenta.tipo]}}</td>
+                        <td>{% if cuenta.tipo=="propia" %}
                             {{cuenta.saldo}}
-                            {% elif cuenta.tipo=="Deuda" %}
+                            {% elif cuenta.tipo=="deuda" %}
                             <div class="badge badge-pill 
                                 {% if cuenta.total == 0 %}
                                 badge-success
