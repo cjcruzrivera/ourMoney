@@ -1,0 +1,51 @@
+{% extends "/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Crear Cuenta</h2>
+
+    <div class="row">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{url_for('main.cuentas')}}">Lista de Cuentas</a></li>
+                <li class="breadcrumb-item active">Nueva Cuenta</li>
+            </ol>
+        </nav>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{{url_for('main.crear_cuenta')}}" class="form" method="POST">
+                <div class="form-row">
+                    <div class="col-md-4 form-group">
+                        <label for="nombre">Nombre Cuenta:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- TODO: Cambiar a select button picker -->
+                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-round w-100" title="Tipo Cuenta">
+                            <option disabled selected>Seleccione Tipo Cuenta</option>
+                            {% for key, value in tipos.items() %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                            
+                          </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
+                        <label for="total">Saldo Inicial</label>
+                        <input type="number" name="total" id="total" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Guardar Cuenta</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- TODO: Añadir validator -->

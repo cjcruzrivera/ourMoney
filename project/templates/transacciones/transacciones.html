@@ -1,0 +1,74 @@
+{% extends "/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Transacciones</h2>
+    <div class="row">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Lista de Transacciones /</li>
+            </ol>
+        </nav>
+    </div>
+
+    {% include '/includes/messages.html' %}
+
+    <div class="row mt-4 mb-4">
+        <div class="col-md-4">
+            <a href="{{url_for('main.crear_transaccion')}}" class="btn btn-success">Nuevo</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table id="datatable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <!-- TODO: Implementar Seleccionar todo?? -->
+                        </th>
+                        <th>ID</th>
+                        <th>Cuenta Origen</th>
+                        <th>Cuenta Destino</th>
+                        <th class="">Valor</th>
+                        <th>Responsable</th>
+                        <th>Fecha</th>
+                        <th class="w-15">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaccion in transacciones %}
+                    <tr>
+                        <td>
+                            <!-- TODO: Implementar Seleccionar para borrado masivo?? -->
+                        </td>
+                        <td>{{transaccion.id}}</td>
+                        <!-- TODO: Preguntar por white-space: nowrap; -->
+                        <td>{{transaccion.origen.nombre}}</td>
+                        <td>{{transaccion.destino.nombre}}</td>
+                        <td>{{transaccion.valor}}</td>
+                        <td>{{transaccion.realiza.nombre_completo}}</td>
+                        <!-- TODO: añadir tooltip con usuario registra -->
+                        <td>{{transaccion.fecha_realiza.strftime('%d-%m-%Y')}}</td>
+                        <!-- TODO: añadir tooltip con fecha registra -->
+                        <td> 
+                            <a href="{{url_for('main.editar_transaccion', transaccion_id=transaccion.id)}}" class="btn btn-sm btn-info edit"><span class="material-icons">create</span></a>
+                            <a href="{{url_for('main.eliminar_transaccion', transaccion_id=transaccion.id)}}" class="btn btn-sm btn-danger remove"><span
+                                    class="material-icons">delete</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+
+    {% include '/includes/datatables.html' %}
+
+{% endblock %}
