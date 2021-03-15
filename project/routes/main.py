@@ -61,7 +61,7 @@ def editar_cuenta(cuenta_id):
     cuenta = Cuenta.query.filter_by(id=cuenta_id).first_or_404(
         description="No se encuentra ninguna cuenta registrada con id {}".format(cuenta_id))
     if request.method == "GET":
-        return render_template("cuentas/editar_cuenta.html", cuenta=cuenta)
+        return render_template("cuentas/editar_cuenta.html", cuenta=cuenta, tipos = Cuenta.tipos)
 
     nombre = request.form.get("nombre")
 

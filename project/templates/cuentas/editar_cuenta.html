@@ -27,9 +27,10 @@
                         <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-round w-100"
                             title="Tipo Cuenta">
                             <option disabled>Seleccione Tipo Cuenta</option>
-                            <option {% if cuenta.tipo =='Propia' %} selected {% endif %} value="Propia">Propia</option>
-                            <option {% if cuenta.tipo =='Externa' %} selected {% endif %} value="Externa">Externa</option>
-                            <option {% if cuenta.tipo =='Deuda' %} selected {% endif %} value="Deuda">Deuda</option>
+                            {% for key, value in tipos.items() %}
+                                    <option {% if cuenta.tipo == key %} selected {% endif %} value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                            
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
