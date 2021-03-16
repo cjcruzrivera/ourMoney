@@ -11,10 +11,11 @@ Coded by Creative Tim
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% include "includes/header.html" %}
   {% block extracss %}
-  
+
   {% endblock %}
 </head>
 
@@ -431,7 +432,7 @@ The above copyright notice and this permission notice shall be included in all c
         {% endblock %}
       </div>
       {% include "includes/footer.html" %}
-      
+
     </div>
   </div>
   <!-- <div class="fixed-plugin">
@@ -580,6 +581,10 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="/static/material/assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
   <script>
     $(document).ready(function () {
+      $("select").on('change', function () {
+        $(this).next().addClass('selected-option')
+      })
+
       $().ready(function () {
         $sidebar = $('.sidebar');
 
@@ -751,7 +756,7 @@ The above copyright notice and this permission notice shall be included in all c
   </script>
 
   {% block extrajs %}
-  
+
   {% endblock %}
 
   <script>

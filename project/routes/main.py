@@ -35,9 +35,8 @@ def crear_cuenta():
         flash('Ya existe una cuenta con ese nombre', 'danger')
         return redirect(url_for('main.crear_cuenta'))
 
-    # TODO: Validar Saldo como dato obligatorio en caso de cuenta propia
     tipo = request.form.get("tipo")
-    total = request.form.get("total")
+    total = request.form.get("saldo").replace("$", "").replace(".", "") or 0
 
     cuenta = Cuenta(nombre=nombre, tipo=tipo, total=total)
     db.session.add(cuenta)
@@ -70,9 +69,8 @@ def editar_cuenta(cuenta_id):
         flash('Ya existe una cuenta con ese nombre', 'danger')
         return redirect(url_for('main.editar_cuenta', ))
 
-    # TODO: Validar Saldo como dato obligatorio en caso de cuenta propia
     tipo = request.form.get("tipo")
-    total = request.form.get("total")
+    total = request.form.get("saldo").replace("$", "").replace(".", "") or 0
     cuenta.nombre = nombre
     cuenta.tipo = tipo
     cuenta.total = total

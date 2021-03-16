@@ -37,13 +37,14 @@ class Cuenta(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100))
-    tipo = db.Column(db.String(30))  # propia, externa, deuda
+    tipo = db.Column(db.String(30))
     total = db.Column(db.Integer)
 
     @hybrid_property
     def saldo(self):
         """ total formated """
-        return "${:,.0f}".format(self.total)
+        self.total = self.total or 0
+        return "${:,.0f}".format(self.total).replace(',', '.')
 
     def set_valor_origen(self, valor, reversed_trans=False):
         """ Set Value Cuenta Origen """

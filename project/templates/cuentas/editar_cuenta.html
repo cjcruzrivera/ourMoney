@@ -16,27 +16,33 @@
     {% include 'includes/messages.html' %}
     <div class="row">
         <div class="col-md-12">
-            <form action="{{url_for('main.editar_cuenta', cuenta_id=cuenta.id)}}" class="form" method="POST">
+            <form action="{{url_for('main.editar_cuenta', cuenta_id=cuenta.id)}}" class="form" id="form" method="POST">
                 <div class="form-row">
                     <div class="col-md-4 form-group">
                         <label for="nombre">Nombre Cuenta:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{cuenta.nombre}}">
+                        <input type="text" name="nombre" id="nombre" required class="form-control" value="{{cuenta.nombre}}">
+                        <div class="invalid-feedback">
+                            Debe ingresar un nombre para la cuenta
+                        </div>
                     </div>
                     <div class="form-group col-md-3">
                         <!-- TODO: Cambiar a select button picker -->
-                        <select class="selectpicker" name="tipo" data-style="btn btn-sm btn-round w-100"
+                        <select class="selectpicker" required name="tipo" id="tipo" data-style="btn btn-sm btn-round w-100"
                             title="Tipo Cuenta">
                             <option disabled>Seleccione Tipo Cuenta</option>
                             {% for key, value in tipos.items() %}
-                                    <option {% if cuenta.tipo == key %} selected {% endif %} value="{{ key }}">{{ value }}</option>
+                            <option {% if cuenta.tipo==key %} selected {% endif %} value="{{ key }}">{{ value }}
+                            </option>
                             {% endfor %}
-                            
                         </select>
+                        <div class="invalid-feedback">
+                            Debe seleccionar un tipo de cuenta
+                        </div>
                     </div>
                     <div class="col-md-3 form-group">
                         <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
-                        <label for="total">Saldo Inicial</label>
-                        <input type="number" name="total" id="total" class="form-control" value="{{cuenta.total}}">
+                        <label for="saldo">Saldo Inicial</label>
+                        <input {% if cuenta.tipo=='propia' %} required {% endif %} type="text" name="saldo" data-type="currency" id="saldo" class="form-control" value="{{cuenta.saldo}}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -50,4 +56,19 @@
 </div>
 {% endblock %}
 
-<!-- TODO: Añadir validator -->
+{% block extrajs %}
+<script src="/static/js/validator.js"></script>
+<script>
+
+$(document).ready(function() {
+    setFormValidation('#form');
+    $("#tipo").on('change', function () {
+        if($(this).val() == "propia"){
+            $("#saldo").attr("required", "required");
+        }else{
+            $("#saldo").removeAttr("required")
+        }
+    })
+  });
+</script>
+{% endblock %}

@@ -15,7 +15,7 @@
 
  */
 
-(function() {
+(function () {
   isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
   if (isWindows) {
@@ -59,7 +59,7 @@ var seq2 = 0,
   delays2 = 80,
   durations2 = 500;
 
-$(document).ready(function() {
+$(document).ready(function () {
   $sidebar = $('.sidebar');
   window_width = $(window).width();
 
@@ -76,9 +76,90 @@ $(document).ready(function() {
 
   md.initMinimizeSidebar();
 
-  // Multilevel Dropdown menu
+  $("input[data-type='currency']").on({
+    keyup: function () {
+      formatCurrency($(this));
+    },
+    blur: function () {
+      formatCurrency($(this), "blur");
+    }
+  });
 
-  $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+
+  function formatNumber(n) {
+    // format number 1000000 to 1,234,567
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
+
+
+  function formatCurrency(input, blur) {
+    // appends $ to value, validates decimal side
+    // and puts cursor back in right position.
+
+    // get input value
+    var input_val = input.val();
+
+    // don't validate empty input
+    if (input_val === "") {
+      return;
+    }
+
+    // original length
+    var original_len = input_val.length;
+
+    // initial caret position 
+    var caret_pos = input.prop("selectionStart");
+
+    // check for decimal
+    if (input_val.indexOf(",") >= 0) {
+
+      // get position of first decimal
+      // this prevents multiple decimals from
+      // being entered
+      var decimal_pos = input_val.indexOf(",");
+
+      // split number by decimal point
+      var left_side = input_val.substring(0, decimal_pos);
+      var right_side = input_val.substring(decimal_pos);
+
+      // add commas to left side of number
+      left_side = formatNumber(left_side);
+
+      // validate right side
+      right_side = formatNumber(right_side);
+
+      // On blur make sure 2 numbers after decimal
+      if (blur === "blur") {
+        right_side += "00";
+      }
+
+      // Limit decimal to only 2 digits
+      right_side = right_side.substring(0, 2);
+
+      // join number by .
+      input_val = "$" + left_side + "," + right_side;
+
+    } else {
+      // no decimal entered
+      // add commas to number
+      // remove all non-digits
+      input_val = formatNumber(input_val);
+      input_val = "$" + input_val;
+
+    }
+
+    // send updated string to input
+    input.val(input_val);
+
+    // put caret back in the right position
+    var updated_len = input_val.length;
+    caret_pos = updated_len - original_len + caret_pos;
+    input[0].setSelectionRange(caret_pos, caret_pos);
+  }
+
+
+
+  $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
     var $el = $(this);
     var $parent = $(this).offsetParent(".dropdown-menu");
     if (!$(this).next().hasClass('show')) {
@@ -89,7 +170,7 @@ $(document).ready(function() {
 
     $(this).closest("a").toggleClass('open');
 
-    $(this).parents('a.dropdown-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $(this).parents('a.dropdown-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
       $('.dropdown-menu .show').removeClass("show");
     });
 
@@ -107,8 +188,8 @@ $(document).ready(function() {
   //   Activate bootstrap-select
   if ($(".selectpicker").length != 0) {
     $(".selectpicker").selectpicker();
+    $(".selectpicker").next().addClass('selected-option');
   }
-
   //  Activate the tooltips
   $('[rel="tooltip"]').tooltip();
 
@@ -131,20 +212,20 @@ $(document).ready(function() {
     "optionClass": ""
   });
 
-  $('.form-control').on("focus", function() {
+  $('.form-control').on("focus", function () {
     $(this).parent('.input-group').addClass("input-group-focus");
-  }).on("blur", function() {
+  }).on("blur", function () {
     $(this).parent(".input-group").removeClass("input-group-focus");
   });
 
 
   if (breakCards == true) {
     // We break the cards headers if there is too much stress on them :-)
-    $('[data-header-animation="true"]').each(function() {
+    $('[data-header-animation="true"]').each(function () {
       var $fix_button = $(this)
       var $card = $(this).parent('.card');
 
-      $card.find('.fix-broken-card').click(function() {
+      $card.find('.fix-broken-card').click(function () {
         console.log(this);
         var $header = $(this).parent().parent().siblings('.card-header, .card-header-image');
 
@@ -152,12 +233,12 @@ $(document).ready(function() {
 
         $card.attr('data-count', 0);
 
-        setTimeout(function() {
+        setTimeout(function () {
           $header.removeClass('fadeInDown animate');
         }, 480);
       });
 
-      $card.mouseenter(function() {
+      $card.mouseenter(function () {
         var $this = $(this);
         hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
         $this.attr("data-count", hover_count);
@@ -170,7 +251,7 @@ $(document).ready(function() {
   }
 
   // remove class has-error for checkbox validation
-  $('input[type="checkbox"][required="true"], input[type="radio"][required="true"]').on('click', function() {
+  $('input[type="checkbox"][required="true"], input[type="radio"][required="true"]').on('click', function () {
     if ($(this).hasClass('error')) {
       $(this).closest('div').removeClass('has-error');
     }
@@ -178,20 +259,20 @@ $(document).ready(function() {
 
 });
 
-$(document).on('click', '.navbar-toggler', function() {
+$(document).on('click', '.navbar-toggler', function () {
   $toggle = $(this);
 
   if (mobile_menu_visible == 1) {
     $('html').removeClass('nav-open');
 
     $('.close-layer').remove();
-    setTimeout(function() {
+    setTimeout(function () {
       $toggle.removeClass('toggled');
     }, 400);
 
     mobile_menu_visible = 0;
   } else {
-    setTimeout(function() {
+    setTimeout(function () {
       $toggle.addClass('toggled');
     }, 430);
 
@@ -204,17 +285,17 @@ $(document).on('click', '.navbar-toggler', function() {
       $layer.appendTo(".wrapper-full-page");
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
       $layer.addClass('visible');
     }, 100);
 
-    $layer.click(function() {
+    $layer.click(function () {
       $('html').removeClass('nav-open');
       mobile_menu_visible = 0;
 
       $layer.removeClass('visible');
 
-      setTimeout(function() {
+      setTimeout(function () {
         $layer.remove();
         $toggle.removeClass('toggled');
 
@@ -229,13 +310,13 @@ $(document).on('click', '.navbar-toggler', function() {
 });
 
 // activate collapse right menu when the windows is resized
-$(window).resize(function() {
+$(window).resize(function () {
   md.initSidebarsCheck();
 
   // reset the seq for charts drawing animations
   seq = seq2 = 0;
 
-  setTimeout(function() {
+  setTimeout(function () {
     md.initDashboardPageCharts();
   }, 500);
 });
@@ -247,7 +328,7 @@ md = {
     disabled_collapse_init: 0,
   },
 
-  checkSidebarImage: function() {
+  checkSidebarImage: function () {
     $sidebar = $('.sidebar');
     image_src = $sidebar.data('image');
 
@@ -257,7 +338,7 @@ md = {
     }
   },
 
-  showNotification: function(from, align) {
+  showNotification: function (from, align) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
@@ -276,7 +357,7 @@ md = {
     });
   },
 
-  initDocumentationCharts: function() {
+  initDocumentationCharts: function () {
     if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -308,7 +389,7 @@ md = {
   },
 
 
-  initFormExtendedDatetimepickers: function() {
+  initFormExtendedDatetimepickers: function () {
     $('.datetimepicker').datetimepicker({
       icons: {
         time: "fa fa-clock-o",
@@ -357,7 +438,7 @@ md = {
   },
 
 
-  initSliders: function() {
+  initSliders: function () {
     // Sliders for demo purpose
     var slider = document.getElementById('sliderRegular');
 
@@ -382,7 +463,7 @@ md = {
     });
   },
 
-  initSidebarsCheck: function() {
+  initSidebarsCheck: function () {
     if ($(window).width() <= 991) {
       if ($sidebar.length != 0) {
         md.initRightMenu();
@@ -390,7 +471,7 @@ md = {
     }
   },
 
-  checkFullPageBackgroundImage: function() {
+  checkFullPageBackgroundImage: function () {
     $page = $('.full-page');
     image_src = $page.data('image');
 
@@ -400,7 +481,7 @@ md = {
     }
   },
 
-  initDashboardPageCharts: function() {
+  initDashboardPageCharts: function () {
 
     if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0 || $('#websiteViewsChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization    ==========---------- */
@@ -487,7 +568,7 @@ md = {
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
           axisX: {
-            labelInterpolationFnc: function(value) {
+            labelInterpolationFnc: function (value) {
               return value[0];
             }
           }
@@ -500,9 +581,9 @@ md = {
     }
   },
 
-  initMinimizeSidebar: function() {
+  initMinimizeSidebar: function () {
 
-    $('#minimizeSidebar').click(function() {
+    $('#minimizeSidebar').click(function () {
       var $btn = $(this);
 
       if (md.misc.sidebar_mini_active == true) {
@@ -514,18 +595,18 @@ md = {
       }
 
       // we simulate the window Resize so the charts will get updated in realtime.
-      var simulateWindowResize = setInterval(function() {
+      var simulateWindowResize = setInterval(function () {
         window.dispatchEvent(new Event('resize'));
       }, 180);
 
       // we stop the simulation of Window Resize after the animations are completed
-      setTimeout(function() {
+      setTimeout(function () {
         clearInterval(simulateWindowResize);
       }, 1000);
     });
   },
 
-  checkScrollForTransparentNavbar: debounce(function() {
+  checkScrollForTransparentNavbar: debounce(function () {
     if ($(document).scrollTop() > 260) {
       if (transparent) {
         transparent = false;
@@ -540,7 +621,7 @@ md = {
   }, 17),
 
 
-  initRightMenu: debounce(function() {
+  initRightMenu: debounce(function () {
     $sidebar_wrapper = $('.sidebar-wrapper');
 
     if (!mobile_menu_initialized) {
@@ -562,7 +643,7 @@ md = {
       $nav_content.insertBefore($sidebar_nav);
       $navbar_form.insertBefore($nav_content);
 
-      $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function(event) {
+      $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
         event.stopPropagation();
 
       });
@@ -582,9 +663,9 @@ md = {
     }
   }, 200),
 
-  startAnimationForLineChart: function(chart) {
+  startAnimationForLineChart: function (chart) {
 
-    chart.on('draw', function(data) {
+    chart.on('draw', function (data) {
       if (data.type === 'line' || data.type === 'area') {
         data.element.animate({
           d: {
@@ -611,9 +692,9 @@ md = {
 
     seq = 0;
   },
-  startAnimationForBarChart: function(chart) {
+  startAnimationForBarChart: function (chart) {
 
-    chart.on('draw', function(data) {
+    chart.on('draw', function (data) {
       if (data.type === 'bar') {
         seq2++;
         data.element.animate({
@@ -632,7 +713,7 @@ md = {
   },
 
 
-  initFullCalendar: function() {
+  initFullCalendar: function () {
     $calendar = $('#fullCalendar');
 
     today = new Date();
@@ -641,7 +722,7 @@ md = {
     d = today.getDate();
 
     $calendar.fullCalendar({
-      viewRender: function(view, element) {
+      viewRender: function (view, element) {
         // We make sure that we activate the perfect scrollbar when the view isn't on Month
         if (view.name != 'month') {
           $(element).find('.fc-scroller').perfectScrollbar();
@@ -668,7 +749,7 @@ md = {
         }
       },
 
-      select: function(start, end) {
+      select: function (start, end) {
 
         // on select we show the Sweet Alert modal with an input
         swal({
@@ -680,7 +761,7 @@ md = {
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger',
             buttonsStyling: false
-          }).then(function(result) {
+          }).then(function (result) {
 
             var eventData;
             event_title = $('#input-field').val();
@@ -767,7 +848,7 @@ md = {
     });
   },
 
-  initVectorMap: function() {
+  initVectorMap: function () {
     var mapData = {
       "AU": 760,
       "BR": 550,
@@ -814,11 +895,11 @@ md = {
 
 function debounce(func, wait, immediate) {
   var timeout;
-  return function() {
+  return function () {
     var context = this,
       args = arguments;
     clearTimeout(timeout);
-    timeout = setTimeout(function() {
+    timeout = setTimeout(function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     }, wait);
