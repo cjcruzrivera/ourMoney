@@ -188,7 +188,11 @@ $(document).ready(function () {
   //   Activate bootstrap-select
   if ($(".selectpicker").length != 0) {
     $(".selectpicker").selectpicker();
-    $(".selectpicker").next().addClass('selected-option');
+    $(".selectpicker").each(function () {
+      if ($(this).val()) {
+        $(this).next().addClass('selected-option');
+      }
+    })
   }
   //  Activate the tooltips
   $('[rel="tooltip"]').tooltip();

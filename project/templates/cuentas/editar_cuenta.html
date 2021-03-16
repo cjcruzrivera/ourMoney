@@ -39,10 +39,10 @@
                             Debe seleccionar un tipo de cuenta
                         </div>
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-3 form-group {% if cuenta.tipo!='propia' and cuenta.tipo!='deuda' %} d-none {% endif %}" id="divSaldo">
                         <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
                         <label for="saldo">Saldo Inicial</label>
-                        <input {% if cuenta.tipo=='propia' %} required {% endif %} type="text" name="saldo" data-type="currency" id="saldo" class="form-control" value="{{cuenta.saldo}}">
+                        <input {% if cuenta.tipo=='propia' or cuenta.tipo=='deuda' %} required {% endif %} type="text" name="saldo" data-type="currency" id="saldo" class="form-control" value="{{cuenta.saldo}}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -63,10 +63,12 @@
 $(document).ready(function() {
     setFormValidation('#form');
     $("#tipo").on('change', function () {
-        if($(this).val() == "propia"){
+        if($(this).val() == "propia" || $(this).val() == "deuda"){
+            $("#divSaldo").removeClass('d-none');
             $("#saldo").attr("required", "required");
         }else{
-            $("#saldo").removeAttr("required")
+            $("#divSaldo").addClass('d-none');
+            $("#saldo").removeAttr("required");
         }
     })
   });

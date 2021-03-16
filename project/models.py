@@ -96,3 +96,9 @@ class Transaccion(db.Model):
     origen = db.relationship(Cuenta, foreign_keys=origen_id, backref="egresos")
     destino = db.relationship(
         Cuenta, foreign_keys=destino_id, backref="ingresos")
+
+    @hybrid_property
+    def valor_formatted(self):
+        """ total formated """
+        self.valor = self.valor or 0
+        return "${:,.0f}".format(self.valor).replace(',', '.')

@@ -22,7 +22,6 @@
                         <input type="text" name="nombre" id="nombre" class="form-control" required>
                     </div>
                     <div class="form-group col-md-3">
-                        <!-- TODO: Cambiar a select button picker -->
                         <select id="tipo" required class="selectpicker" name="tipo" data-style="btn btn-sm btn-round w-100"
                             title="Tipo Cuenta">
                             <option disabled selected>Seleccione Tipo Cuenta</option>
@@ -31,8 +30,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-3 form-group">
-                        <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
+                    <div class="col-md-3 form-group d-none" id="divSaldo">
                         <label for="saldo">Saldo Inicial</label>
                         <input name="saldo" id="saldo" class="form-control currency-field" type="text" data-type="currency" >
                     </div>
@@ -55,10 +53,12 @@
 $(document).ready(function() {
     setFormValidation('#form');
     $("#tipo").on('change', function () {
-        if($(this).val() == "propia"){
+        if($(this).val() == "propia" || $(this).val() == "deuda"){
+            $("#divSaldo").removeClass('d-none');
             $("#saldo").attr("required", "required");
         }else{
-            $("#saldo").removeAttr("required")
+            $("#divSaldo").addClass('d-none');
+            $("#saldo").removeAttr("required");
         }
     })
   });
