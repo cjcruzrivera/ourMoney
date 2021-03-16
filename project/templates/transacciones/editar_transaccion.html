@@ -46,7 +46,7 @@
                     <div class="col-md-3 form-group">
                         <!-- TODO: Añadir d-none y quitar dinamicamente al elegir Propia -->
                         <label for="total">Valor</label>
-                        <input required type="number" name="total" id="total" class="form-control" value="{{transaccion.valor}}">
+                        <input required type="text" data-type="currency" name="total" id="total" class="form-control" value="{{transaccion.valor_formatted}}">
                     </div>
                 </div>
                 <div class="form-row">

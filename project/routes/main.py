@@ -110,7 +110,7 @@ def crear_transaccion():
     origen_id = request.form.get("origen")
     destino_id = request.form.get("destino")
     realiza_id = request.form.get("realiza")
-    valor = request.form.get("total")
+    valor = request.form.get("total").replace("$", "").replace(".", "")
     fecha_realiza_str = request.form.get("fecha_realiza")
     fecha_realiza = datetime.strptime(fecha_realiza_str, '%m/%d/%Y %H:%M %p')
 
@@ -165,7 +165,7 @@ def editar_transaccion(transaccion_id):
     origen_id = request.form.get("origen")
     destino_id = request.form.get("destino")
     realiza_id = request.form.get("realiza")
-    valor = request.form.get("total")
+    valor = request.form.get("total").replace("$", "").replace(".", "")
     fecha_realiza_str = request.form.get("fecha_realiza")
     fecha_realiza = datetime.strptime(fecha_realiza_str, '%m/%d/%Y %H:%M %p')
 
